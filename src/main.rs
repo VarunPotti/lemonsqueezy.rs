@@ -1,4 +1,4 @@
-use lemonsqueezy::modules::products::{Product, ProductFilters};
+use lemonsqueezy::modules::usage_records::UsageRecords;
 
 #[tokio::main]
 async fn main() {
@@ -6,13 +6,9 @@ async fn main() {
 
     let lemonsqueezy = lemonsqueezy::LemonSqueezy::new(std::env::var("API_KEY").unwrap());
 
-    let product = Product::build(lemonsqueezy);
+    let product = UsageRecords::build(lemonsqueezy.clone());
 
-    let product_filters = ProductFilters {
-        store_id: Some(42756),
-    };
-
-    let products = product.get_all(Some(product_filters)).await.unwrap();
+    let products = product.get_all(None).await.unwrap();
 
     println!("{:#?}", products);
 }

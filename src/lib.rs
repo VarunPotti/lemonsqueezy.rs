@@ -4,7 +4,7 @@ use reqwest::{
     Method, Request,
 };
 
-pub(crate) mod constants;
+pub mod constants;
 pub(crate) mod errors;
 pub mod modules;
 
@@ -63,7 +63,7 @@ impl LemonSqueezy {
             .send()
             .await?;
 
-        let json = response.json().await.unwrap();
+        let json = response.json().await?;
 
         Ok(json)
     }
@@ -119,7 +119,7 @@ impl LemonSqueezy {
     /// let api = LemonSqueezy::new();
     /// api.delete::<serde_json::Value>("/v1/discounts/1").unwrap();
     /// ```
-    pub async fn delete<V: for<'de> serde::Deserialize<'de>, T: serde::ser::Serialize>(
+    pub async fn delete<V: for<'de> serde::Deserialize<'de>>(
         &self,
         url: &str,
     ) -> anyhow::Result<V, NetworkError> {

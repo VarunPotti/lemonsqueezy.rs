@@ -38,3 +38,9 @@ pub struct Data<T> {
     pub attributes: T,
     pub links: Option<Links>,
 }
+
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
+pub struct ResponseMeta<T> {
+    jsonapi: Option<JsonAPI>,
+    meta: T,
+}
