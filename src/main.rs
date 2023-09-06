@@ -1,12 +1,18 @@
-use lemonsqueezy::modules::order_items::OrderItem;
+use lemonsqueezy::modules::products::{Product, ProductFilters};
 
 #[tokio::main]
 async fn main() {
     dotenv::dotenv().ok();
+
     let lemonsqueezy = lemonsqueezy::LemonSqueezy::new(std::env::var("API_KEY").unwrap());
 
-    let variant = OrderItem::build(lemonsqueezy);
-    let variant = variant.get_all(None).await.unwrap();
+    let product = Product::build(lemonsqueezy);
 
-    println!("{:#?}", variant);
+    let product_filters = ProductFilters {
+        store_id: Some(42756),
+    };
+
+    let products = product.get_all(Some(product_filters)).await.unwrap();
+
+    println!("{:#?}", products);
 }
