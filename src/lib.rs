@@ -6,7 +6,8 @@ use reqwest::{
 
 pub mod constants;
 pub(crate) mod errors;
-pub mod modules;
+pub(crate) mod modules;
+pub use crate::modules::*;
 
 #[derive(Clone, Debug)]
 pub struct LemonSqueezy {

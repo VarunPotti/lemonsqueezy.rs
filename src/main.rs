@@ -1,4 +1,4 @@
-use lemonsqueezy::modules::usage_records::UsageRecords;
+use lemonsqueezy::usage_records::UsageRecords;
 
 #[tokio::main]
 async fn main() {

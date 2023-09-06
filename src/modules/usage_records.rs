@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::Value;
 
-use crate::constants::{Data, Response, ResponseMeta, VecResponse};
+use crate::constants::{Data, Response, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct UsageRecordResponse {
@@ -47,12 +47,12 @@ pub struct CreateUsageRecordSubscriptionItemData {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct SubscriptionItemPatchRequest {
+pub struct UsageRecordPatchRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub quantity: Option<i64>,
 }
 
-pub struct SubscriptionItemFilters {
+pub struct UsageRecordFilters {
     pub subscription_item_id: Option<i64>,
 }
 
@@ -79,13 +79,13 @@ impl UsageRecords {
 
     pub async fn get_all(
         &self,
-        filters: Option<SubscriptionItemFilters>,
+        filters: Option<UsageRecordFilters>,
     ) -> anyhow::Result<VecResponse<Vec<Data<UsageRecordResponse>>>, crate::errors::NetworkError>
     {
         let mut url = "/v1/usage-records".to_string();
 
         if filters.is_some() {
-            let filter: SubscriptionItemFilters = filters.unwrap();
+            let filter: UsageRecordFilters = filters.unwrap();
 
             if let Some(subscription_item_id) = filter.subscription_item_id {
                 url.push_str(&format!(
@@ -96,21 +96,6 @@ impl UsageRecords {
         }
 
         let response = self.api.get(&url).await?;
-
-        Ok(response)
-    }
-
-    pub async fn update(
-        &self,
-        data: Data<SubscriptionItemPatchRequest>,
-    ) -> anyhow::Result<Value, crate::errors::NetworkError> {
-        let reqwest_body =
-            reqwest::Body::from(serde_json::to_string(&json!({ "data": data })).unwrap());
-
-        let response = self
-            .api
-            .patch(&format!("/v1/usage-records/{}", data.id), reqwest_body)
-            .await?;
 
         Ok(response)
     }
