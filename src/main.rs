@@ -1,4 +1,4 @@
-use lemonsqueezy::usage_records::UsageRecords;
+use lemonsqueezy::license_key_instances::LicenseKeyInstances;
 
 #[tokio::main]
 async fn main() {
@@ -6,7 +6,7 @@ async fn main() {
 
     let lemonsqueezy = lemonsqueezy::LemonSqueezy::new(std::env::var("API_KEY").unwrap());
 
-    let product = UsageRecords::build(lemonsqueezy.clone());
+    let product = LicenseKeyInstances::build(lemonsqueezy.clone());
 
     let products = product.get_all(None).await.unwrap();
 

@@ -4,9 +4,10 @@ use reqwest::{
     Method, Request,
 };
 
-pub mod constants;
 pub(crate) mod errors;
 pub(crate) mod modules;
+pub mod types;
+pub mod utils;
 pub use crate::modules::*;
 
 #[derive(Clone, Debug)]
@@ -49,13 +50,13 @@ impl LemonSqueezy {
     /// use lemonsqueezy::LemonSqueezy;
     ///
     /// let api = LemonSqueezy::new();
-    /// api.get::<serde_json::Value>("/v1/users/me").unwrap();
+    /// api.get::<serde_json::Value>("/v1/users/me").await.unwrap();
     /// ```
     pub async fn get<T: for<'de> serde::Deserialize<'de>>(
         &self,
         url: &str,
     ) -> anyhow::Result<T, NetworkError> {
-        let url = format!("{}{}", constants::API_URL, url);
+        let url = format!("{}{}", utils::API_URL, url);
 
         let response = self
             .client
@@ -83,14 +84,14 @@ impl LemonSqueezy {
     /// use lemonsqueezy::LemonSqueezy;
     ///
     /// let api = LemonSqueezy::new();
-    /// api.post::<serde_json::Value>("/v1/usage-records").unwrap();
+    /// api.post::<serde_json::Value>("/v1/usage-records").await.unwrap();
     /// ```
     pub async fn post<V: for<'de> serde::Deserialize<'de>, T: serde::ser::Serialize>(
         &self,
         url: &str,
         body: T,
     ) -> anyhow::Result<V, NetworkError> {
-        let url = format!("{}{}", constants::API_URL, url);
+        let url = format!("{}{}", utils::API_URL, url);
 
         let response = self
             .client
@@ -118,13 +119,13 @@ impl LemonSqueezy {
     /// use lemonsqueezy::LemonSqueezy;
     ///
     /// let api = LemonSqueezy::new();
-    /// api.delete::<serde_json::Value>("/v1/discounts/1").unwrap();
+    /// api.delete::<serde_json::Value>("/v1/discounts/1").await.unwrap();
     /// ```
     pub async fn delete<V: for<'de> serde::Deserialize<'de>>(
         &self,
         url: &str,
     ) -> anyhow::Result<V, NetworkError> {
-        let url = format!("{}{}", constants::API_URL, url);
+        let url = format!("{}{}", utils::API_URL, url);
 
         let response = self
             .client
@@ -151,14 +152,14 @@ impl LemonSqueezy {
     /// use lemonsqueezy::LemonSqueezy;
     ///
     /// let api = LemonSqueezy::new();
-    /// api.patch::<serde_json::Value>("/v1/subscriptions/:id").unwrap();
+    /// api.patch::<serde_json::Value>("/v1/subscriptions/:id").await.unwrap();
     /// ```
     pub async fn patch<T: Into<reqwest::Body>>(
         &self,
         url: &str,
         body: T,
     ) -> anyhow::Result<serde_json::Value, NetworkError> {
-        let url = format!("{}{}", constants::API_URL, url);
+        let url = format!("{}{}", utils::API_URL, url);
 
         let mut request = Request::new(Method::PATCH, url.parse().unwrap());
         request.headers_mut().extend(self.headers.clone());

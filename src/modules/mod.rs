@@ -1,5 +1,9 @@
 pub mod customer;
+pub mod discount;
+pub mod discount_redemptions;
 pub mod files;
+pub mod license_key_instances;
+pub mod license_keys;
 pub mod order_items;
 pub mod orders;
 pub mod prices;

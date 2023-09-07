@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 pub const API_URL: &str = "https://api.lemonsqueezy.com";
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -35,8 +37,16 @@ pub struct VecResponse<T> {
 pub struct Data<T> {
     pub r#type: String,
     pub id: String,
+    pub relationships: Option<HashMap<String, HashMap<String, RelationShip>>>,
     pub attributes: T,
     pub links: Option<Links>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
+pub struct RelationShip {
+    related: Option<String>,
+    #[serde(rename = "self")]
+    _self: Option<String>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
