@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Tier {
@@ -58,7 +58,8 @@ impl Prices {
     pub async fn get_all(
         &self,
         filters: Option<PriceFilters>,
-    ) -> anyhow::Result<VecResponse<Vec<Data<PriceResponse>>>, crate::errors::NetworkError> {
+    ) -> anyhow::Result<VecResponse<Vec<ResponseData<PriceResponse>>>, crate::errors::NetworkError>
+    {
         let mut url = "/v1/prices".to_string();
 
         //https://api.lemonsqueezy.com/v1/customers?filter[store_id]=11

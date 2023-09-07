@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct SubscriptionInvoiceResponse {
@@ -78,7 +78,7 @@ impl SubscriptionInvoice {
         &self,
         filters: Option<SubscriptionInvoiceFilter>,
     ) -> anyhow::Result<
-        VecResponse<Vec<Data<SubscriptionInvoiceResponse>>>,
+        VecResponse<Vec<ResponseData<SubscriptionInvoiceResponse>>>,
         crate::errors::NetworkError,
     > {
         let mut url = "/v1/subscription-invoices".to_string();

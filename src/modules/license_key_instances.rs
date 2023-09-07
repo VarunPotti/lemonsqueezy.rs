@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LicenseKeyInstancesResponse {
@@ -43,7 +43,7 @@ impl LicenseKeyInstances {
         &self,
         filters: Option<LicenseKeyInstancesFilters>,
     ) -> anyhow::Result<
-        VecResponse<Vec<Data<LicenseKeyInstancesResponse>>>,
+        VecResponse<Vec<ResponseData<LicenseKeyInstancesResponse>>>,
         crate::errors::NetworkError,
     > {
         let mut url = "/v1/license-key-instances".to_string();

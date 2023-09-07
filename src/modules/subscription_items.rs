@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
-use crate::utils::{Data, Response, ResponseMeta, VecResponse};
+use crate::utils::{Response, ResponseData, ResponseMeta, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct SubscriptionItemResponse {
@@ -63,8 +63,10 @@ impl SubscriptionItems {
     pub async fn get_all(
         &self,
         filters: Option<SubscriptionItemFilters>,
-    ) -> anyhow::Result<VecResponse<Vec<Data<SubscriptionItemResponse>>>, crate::errors::NetworkError>
-    {
+    ) -> anyhow::Result<
+        VecResponse<Vec<ResponseData<SubscriptionItemResponse>>>,
+        crate::errors::NetworkError,
+    > {
         let mut url = "/v1/subscription-items".to_string();
 
         //https://api.lemonsqueezy.com/v1/customers?filter[store_id]=11
@@ -115,7 +117,7 @@ impl SubscriptionItems {
 
     pub async fn update(
         &self,
-        data: Data<SubscriptionItemPatchRequest>,
+        data: ResponseData<SubscriptionItemPatchRequest>,
     ) -> anyhow::Result<Value, crate::errors::NetworkError> {
         let reqwest_body =
             reqwest::Body::from(serde_json::to_string(&json!({ "data": data })).unwrap());

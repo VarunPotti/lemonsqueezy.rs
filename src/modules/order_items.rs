@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct OrderItemResponse {
@@ -50,8 +50,10 @@ impl OrderItem {
     pub async fn get_all(
         &self,
         filters: Option<OrderItemFilters>,
-    ) -> anyhow::Result<VecResponse<Vec<Data<OrderItemResponse>>>, crate::errors::NetworkError>
-    {
+    ) -> anyhow::Result<
+        VecResponse<Vec<ResponseData<OrderItemResponse>>>,
+        crate::errors::NetworkError,
+    > {
         let mut url = "/v1/order-items".to_string();
 
         //https://api.lemonsqueezy.com/v1/customers?filter[store_id]=11

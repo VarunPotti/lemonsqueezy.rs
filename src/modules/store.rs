@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct StoreResponse {
@@ -52,7 +52,8 @@ impl Store {
 
     pub async fn get_all(
         &self,
-    ) -> anyhow::Result<VecResponse<Vec<Data<StoreResponse>>>, crate::errors::NetworkError> {
+    ) -> anyhow::Result<VecResponse<Vec<ResponseData<StoreResponse>>>, crate::errors::NetworkError>
+    {
         let response = self.api.get("/v1/stores").await.unwrap();
 
         Ok(response)

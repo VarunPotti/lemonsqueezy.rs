@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DiscountRedemptionsResponse {
@@ -49,7 +48,7 @@ impl DiscountRedemptions {
         &self,
         filters: Option<DiscountRedemptionsFilters>,
     ) -> anyhow::Result<
-        VecResponse<Vec<Data<DiscountRedemptionsResponse>>>,
+        VecResponse<Vec<ResponseData<DiscountRedemptionsResponse>>>,
         crate::errors::NetworkError,
     > {
         let mut url = "/v1/discount-redemptions".to_string();

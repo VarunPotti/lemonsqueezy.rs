@@ -3,7 +3,7 @@ use serde_json::{json, Value};
 
 use crate::{
     types::discount::CreateDiscountRelationships,
-    utils::{Data, Response, VecResponse},
+    utils::{Response, ResponseData, VecResponse},
 };
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -84,7 +84,8 @@ impl Discount {
     pub async fn get_all(
         &self,
         filters: Option<DiscountFilters>,
-    ) -> anyhow::Result<VecResponse<Vec<Data<DiscountResponse>>>, crate::errors::NetworkError> {
+    ) -> anyhow::Result<VecResponse<Vec<ResponseData<DiscountResponse>>>, crate::errors::NetworkError>
+    {
         let mut url = "/v1/discounts".to_string();
 
         if filters.is_some() {

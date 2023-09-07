@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct UsageRecordResponse {
@@ -80,8 +80,10 @@ impl UsageRecords {
     pub async fn get_all(
         &self,
         filters: Option<UsageRecordFilters>,
-    ) -> anyhow::Result<VecResponse<Vec<Data<UsageRecordResponse>>>, crate::errors::NetworkError>
-    {
+    ) -> anyhow::Result<
+        VecResponse<Vec<ResponseData<UsageRecordResponse>>>,
+        crate::errors::NetworkError,
+    > {
         let mut url = "/v1/usage-records".to_string();
 
         if filters.is_some() {

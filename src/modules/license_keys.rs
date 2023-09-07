@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LicenseKeyResponse {
@@ -55,8 +55,10 @@ impl LicenseKey {
     pub async fn get_all(
         &self,
         filters: Option<LicenseKeyFilters>,
-    ) -> anyhow::Result<VecResponse<Vec<Data<LicenseKeyResponse>>>, crate::errors::NetworkError>
-    {
+    ) -> anyhow::Result<
+        VecResponse<Vec<ResponseData<LicenseKeyResponse>>>,
+        crate::errors::NetworkError,
+    > {
         let mut url = "/v1/license-keys".to_string();
 
         //https://api.lemonsqueezy.com/v1/customers?filter[store_id]=11

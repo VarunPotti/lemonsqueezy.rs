@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::utils::{Data, Response, VecResponse};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FileResponse {
@@ -48,7 +48,8 @@ impl Files {
     pub async fn get_all(
         &self,
         filters: Option<FileFilters>,
-    ) -> anyhow::Result<VecResponse<Vec<Data<FileResponse>>>, crate::errors::NetworkError> {
+    ) -> anyhow::Result<VecResponse<Vec<ResponseData<FileResponse>>>, crate::errors::NetworkError>
+    {
         let mut url = "/v1/files".to_string();
 
         //https://api.lemonsqueezy.com/v1/customers?filter[store_id]=11
