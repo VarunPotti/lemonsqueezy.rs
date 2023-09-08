@@ -1,10 +1,9 @@
+pub use crate::types::discount::*;
+
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
-use crate::{
-    types::discount::CreateDiscountRelationships,
-    utils::{Response, ResponseData, VecResponse},
-};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DiscountResponse {

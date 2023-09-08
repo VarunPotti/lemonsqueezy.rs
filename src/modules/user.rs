@@ -25,6 +25,19 @@ impl User {
         Self { api }
     }
 
+    /// Retrieve the user
+    ///
+    /// # Returns
+    /// `Result<Response<UserResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::user::User;
+    /// let user = User::build(lemonsqueezy);
+    /// let user = user.retrieve().await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/users#retrieve-the-authenticated-user
     pub async fn retrieve(
         &self,
     ) -> anyhow::Result<Response<UserResponse>, crate::errors::NetworkError> {

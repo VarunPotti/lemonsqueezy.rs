@@ -38,6 +38,22 @@ impl Store {
         Self { api }
     }
 
+    /// Retrieve the store
+    ///
+    /// # Arguments
+    /// * `store_id` - The store id
+    ///
+    /// # Returns
+    /// `Result<Response<StoreResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::user::Store;
+    /// let store = Store::build(lemonsqueezy);
+    /// let store = store.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/stores#retrieve-a-store
     pub async fn retrieve(
         &self,
         store_id: usize,
@@ -50,6 +66,19 @@ impl Store {
         Ok(response)
     }
 
+    /// Retrieve all the stores
+    ///
+    /// # Returns
+    /// `Result<VecResponse<Vec<ResponseData<StoreResponse>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::user::Store;
+    /// let store = Store::build(lemonsqueezy);
+    /// let store = store.get_all().await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/stores#retrieve-a-store
     pub async fn get_all(
         &self,
     ) -> anyhow::Result<VecResponse<Vec<ResponseData<StoreResponse>>>, crate::errors::NetworkError>

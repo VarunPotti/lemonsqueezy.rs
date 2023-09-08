@@ -1,10 +1,9 @@
+pub use crate::types::webhook::*;
+
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::{
-    types::webhook::{CreateWebhook, UpdateWebhook},
-    utils::{Response, ResponseData, VecResponse},
-};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 pub struct WebhookRedemptionsFilters {
     pub order_id: Option<i64>,

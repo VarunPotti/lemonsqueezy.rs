@@ -1,9 +1,8 @@
+pub use crate::types::checkout::*;
+
 use serde_json::json;
 
-use crate::{
-    types::checkout::{CheckoutResponse, CreateCheckout},
-    utils::{Response, ResponseData, VecResponse},
-};
+use crate::utils::{Response, ResponseData, VecResponse};
 
 pub struct WebhookRedemptionsFilters {
     pub store_id: Option<i64>,
