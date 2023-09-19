@@ -45,6 +45,22 @@ impl Variant {
         Self { api }
     }
 
+    /// Retrieve the variant
+    ///
+    /// # Arguments
+    /// * `variant_id` - The variant id
+    ///
+    /// # Returns
+    /// `Result<Response<VariantResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::variant::Variant;
+    /// let variants = Variant::build(lemonsqueezy);
+    /// let variant = variants.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/variants
     pub async fn retrieve(
         &self,
         variant_id: usize,
@@ -57,6 +73,19 @@ impl Variant {
         Ok(response)
     }
 
+    /// Get all variants
+    ///
+    /// # Returns
+    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::variant::Variant;
+    /// let variants = Variant::build(lemonsqueezy);
+    /// let variant = variants.get_all(None).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/variants
     pub async fn get_all(
         &self,
         filters: Option<VariantFilters>,
@@ -64,7 +93,6 @@ impl Variant {
     {
         let mut url = "/v1/variants".to_string();
 
-        //https://api.lemonsqueezy.com/v1/customers?filter[store_id]=11
         if filters.is_some() {
             let filter: VariantFilters = filters.unwrap();
 

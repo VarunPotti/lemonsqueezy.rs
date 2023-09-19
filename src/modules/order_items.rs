@@ -35,6 +35,22 @@ impl OrderItem {
         Self { api }
     }
 
+    /// Retrieve the order_items
+    ///
+    /// # Arguments
+    /// * `order_items_id` - The order_items id
+    ///
+    /// # Returns
+    /// `Result<Response<OrderResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::order_items::OrderItem;
+    /// let order_items = OrderItem::build(lemonsqueezy);
+    /// let order_items = order_items.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/order_items#retrieve-a-order_items
     pub async fn retrieve(
         &self,
         file_id: usize,
@@ -47,6 +63,19 @@ impl OrderItem {
         Ok(response)
     }
 
+    /// Retrieve all the Order Items
+    ///
+    /// # Returns
+    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::order_items::OrderItem;
+    /// let order_items = OrderItem::build(lemonsqueezy);
+    /// let order_items = order_items.get_all(None).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/order_items#list-all-order_items
     pub async fn get_all(
         &self,
         filters: Option<OrderItemFilters>,

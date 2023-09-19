@@ -48,7 +48,7 @@ impl Store {
     ///
     /// # Example
     /// ```rust
-    /// use lemonsqueezy::user::Store;
+    /// use lemonsqueezy::store::Store;
     /// let store = Store::build(lemonsqueezy);
     /// let store = store.retrieve(123).await.unwrap();
     /// ```
@@ -73,7 +73,7 @@ impl Store {
     ///
     /// # Example
     /// ```rust
-    /// use lemonsqueezy::user::Store;
+    /// use lemonsqueezy::store::Store;
     /// let store = Store::build(lemonsqueezy);
     /// let store = store.get_all().await.unwrap();
     /// ```

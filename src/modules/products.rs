@@ -36,6 +36,22 @@ impl Product {
         Self { api }
     }
 
+    /// Retrieve the product
+    ///
+    /// # Arguments
+    /// * `product_id` - The product id
+    ///
+    /// # Returns
+    /// `Result<Response<ProductResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::product::Product;
+    /// let products = Product::build(lemonsqueezy);
+    /// let product = products.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/products#retrieve-a-product
     pub async fn retrieve(
         &self,
         product_id: usize,
@@ -48,6 +64,19 @@ impl Product {
         Ok(response)
     }
 
+    /// Retrieve all the product
+    ///
+    /// # Returns
+    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::product::Product;
+    /// let products = Product::build(lemonsqueezy);
+    /// let product = products.get_all(None).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/products#list-all-products
     pub async fn get_all(
         &self,
         filters: Option<ProductFilters>,

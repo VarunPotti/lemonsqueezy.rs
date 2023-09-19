@@ -35,7 +35,8 @@ async fn main() {
     let user = user.retrieve().await.unwrap();
 
     println!("{:#?}", user);
-}```
+}
+```
 
 ## Quick Links 
 - [Next: User](user.md)

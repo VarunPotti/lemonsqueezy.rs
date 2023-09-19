@@ -33,6 +33,22 @@ impl Files {
         Self { api }
     }
 
+    /// Retrieve a file
+    ///
+    /// # Arguments
+    /// * `file_id` - The product id
+    ///
+    /// # Returns
+    /// `Result<Response<FileResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::files::File;
+    /// let files = File::build(lemonsqueezy);
+    /// let file = files.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/files#retrieve-a-file
     pub async fn retrieve(
         &self,
         file_id: usize,
@@ -45,6 +61,22 @@ impl Files {
         Ok(response)
     }
 
+    /// Retrieve all the files
+    ///
+    /// # Arguments
+    /// * `filters` - The customer filters (optional)
+    ///
+    /// # Returns
+    /// `Result<VecResponse<Vec<ResponseData<FileResponse>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::files::Files;
+    /// let files = Files::build(lemonsqueezy);
+    /// let file = files.get_all(None).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/files#list-all-files
     pub async fn get_all(
         &self,
         filters: Option<FileFilters>,

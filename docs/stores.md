@@ -6,16 +6,16 @@ You can find the LemonSqueezy link [here](https://docs.lemonsqueezy.com/api/stor
 ## Retrieve Store
 
 ```rust
-use lemonsqueezy::user::Store;
+use lemonsqueezy::store::Store;
 
 let store = Store::build(lemonsqueezy);
 let store = store.retrieve(123).await.unwrap();
 ```
 
-## Get All Store
+## Get All Stores
 
 ```rust
-use lemonsqueezy::user::Store;
+use lemonsqueezy::store::Store;
 
 let store = Store::build(lemonsqueezy);
 let store = store.get_all().await.unwrap();

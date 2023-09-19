@@ -37,6 +37,22 @@ impl Customer {
         Self { api }
     }
 
+    /// Retrieve the customer
+    ///
+    /// # Arguments
+    /// * `customer_id` - The customer id
+    ///
+    /// # Returns
+    /// `Result<Response<CustomerResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::customer::Customer;
+    /// let customer = Customer::build(lemonsqueezy);
+    /// let store = customer.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/customers#retrieve-a-customer
     pub async fn retrieve(
         &self,
         customer_id: usize,
@@ -49,6 +65,22 @@ impl Customer {
         Ok(response)
     }
 
+    /// Retrieve all the customers
+    ///
+    /// # Arguments
+    /// * `filters` - The customer filters
+    ///
+    /// # Returns
+    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::customer::Customer;
+    /// let customer = Customer::build(lemonsqueezy);
+    /// let customer = customer.get_all().await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/stores#retrieve-a-store
     pub async fn get_all(
         &self,
         filters: Option<CustomerFilters>,

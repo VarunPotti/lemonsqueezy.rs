@@ -61,15 +61,30 @@ pub struct OrderFilters {
     pub user_email: Option<String>,
 }
 
-pub struct Orders {
+pub struct Order {
     pub(crate) api: crate::LemonSqueezy,
 }
 
-impl Orders {
+impl Order {
     pub fn build(api: crate::LemonSqueezy) -> Self {
         Self { api }
     }
-
+    /// Retrieve the orders
+    ///
+    /// # Arguments
+    /// * `orders_id` - The orders id
+    ///
+    /// # Returns
+    /// `Result<Response<OrderResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::orders::Order;
+    /// let orders = Order::build(lemonsqueezy);
+    /// let orders = orders.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/orders#retrieve-a-orders
     pub async fn retrieve(
         &self,
         file_id: usize,
@@ -82,6 +97,19 @@ impl Orders {
         Ok(response)
     }
 
+    /// Retrieve all the orders
+    ///
+    /// # Returns
+    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::orders::Order;
+    /// let orders = Order::build(lemonsqueezy);
+    /// let orders = orders.get_all(None).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/orders#list-all-orders
     pub async fn get_all(
         &self,
         filters: Option<OrderFilters>,
