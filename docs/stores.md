@@ -22,5 +22,5 @@ let store = store.get_all().await.unwrap();
 ```
 
 ## Quick Links 
-- [Back: Installation](index.md)
+- [Back: User](user.md)
 - [Next: Customers](customers.md)
