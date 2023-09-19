@@ -100,7 +100,7 @@ impl Order {
     /// Retrieve all the orders
     ///
     /// # Returns
-    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    /// `Result<VecResponse<Vec<ResponseData<OrderResponse>>, crate::errors::NetworkError>` object
     ///
     /// # Example
     /// ```rust

@@ -29,6 +29,21 @@ impl DiscountRedemptions {
         Self { api }
     }
 
+    /// Retrieve a discount redemption
+    ///
+    /// # Arguments
+    /// - discount_redemption_id: The ID of the discount redemption to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<DiscountRedemptionsResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::discount_redemptions::DiscountRedemptions;
+    /// let discount_redemptions = DiscountRedemptions::build(lemonsqueezy);
+    /// let discount_redemption = discount_redemptions.retrieve(1).await;
+    /// ```
+    ///
     pub async fn retrieve(
         &self,
         discount_redemption_id: usize,
@@ -44,6 +59,20 @@ impl DiscountRedemptions {
         Ok(response)
     }
 
+    /// Retrieve all discount redemptions
+    ///
+    /// # Arguments
+    /// - filters: The discount redemption filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<DiscountRedemptionsResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::discount_redemptions::DiscountRedemptions;
+    /// let discount_redemptions = DiscountRedemptions::build(lemonsqueezy);
+    /// let discount_redemptions = discount_redemptions.get_all(None).await;
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<DiscountRedemptionsFilters>,

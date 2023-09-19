@@ -23,4 +23,4 @@ let order_items = order_items.get_all(None).await.unwrap();
 
 ## Quick Links 
 - [Back: Variants](variants.md)
-- [Next: Customers](customers.md)
+- [Next: Subscriptions](subscriptions.md)

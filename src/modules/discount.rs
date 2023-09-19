@@ -68,18 +68,46 @@ impl Discount {
         Self { api }
     }
 
+    /// Retrieve a discount
+    ///
+    /// # Arguments
+    /// - discount_id: The ID of the discount to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<DiscountResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::discount::Discount;
+    /// let discount = Discount::build(lemonsqueezy);
+    /// let discount = discount.retrieve(1).await;
+    /// ```
     pub async fn retrieve(
         &self,
-        usage_record_id: usize,
+        discount_id: usize,
     ) -> anyhow::Result<Response<DiscountResponse>, crate::errors::NetworkError> {
         let response = self
             .api
-            .get::<Response<DiscountResponse>>(&format!("/v1/discounts/{}", usage_record_id))
+            .get::<Response<DiscountResponse>>(&format!("/v1/discounts/{}", discount_id))
             .await?;
 
         Ok(response)
     }
 
+    /// Retrieve all discounts
+    ///
+    /// # Arguments
+    /// - filters: The discount filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<DiscountResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::discount::Discount;
+    /// let discount = Discount::build(lemonsqueezy);
+    /// let discount = discount.get_all(None).await;
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<DiscountFilters>,
@@ -100,24 +128,66 @@ impl Discount {
         Ok(response)
     }
 
+    /// Delete a discount
+    ///
+    /// # Arguments
+    /// - discount_id: The ID of the discount to delete
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<DiscountResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::discount::Discount;
+    /// let discount = Discount::build(lemonsqueezy);
+    /// let discount = discount.delete(1).await;
+    /// ```
     pub async fn delete(
         &self,
-        usage_record_id: usize,
+        discount_id: usize,
     ) -> anyhow::Result<Response<DiscountResponse>, crate::errors::NetworkError> {
         let response = self
             .api
-            .delete::<Response<DiscountResponse>>(&format!("/v1/discounts/{}", usage_record_id))
+            .delete::<Response<DiscountResponse>>(&format!("/v1/discounts/{}", discount_id))
             .await?;
 
         Ok(response)
     }
 
+    /// Create a discount
+    ///
+    /// # Arguments
+    /// - data: The discount data
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<DiscountResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::discount::{Discount, CreateDiscount, CreateDiscountAttributes, CreateDiscountRelationships};
+    /// let discount = Discount::build(lemonsqueezy);
+    /// let data = CreateDiscount {
+    ///    r#type: "discounts".to_string(),
+    ///    attributes: CreateDiscountAttributes {
+    ///       name: "Test".to_string(),
+    ///       code: "TEST".to_string(),
+    ///       amount: 100,
+    ///       amount_type: "fixed".to_string(),
+    ///       ..Default::default()
+    ///     },
+    ///     relationships: CreateDiscountRelationships {
+    ///      store: 1,
+    ///     ..Default::default()
+    ///     }
+    /// };
+    /// let discount = discount.create(data).await;
+    /// ```
     pub async fn create(
         &self,
         data: CreateDiscount,
     ) -> anyhow::Result<Response<DiscountResponse>, crate::errors::NetworkError> {
         let json = json!({ "data": data });
-        println!("{}", serde_json::to_string_pretty(&json).unwrap());
+
         let response = self.api.post("/v1/discounts", json).await?;
 
         Ok(response)

@@ -65,6 +65,21 @@ impl UsageRecords {
         Self { api }
     }
 
+    /// Retrieve a usage record
+    ///
+    /// # Arguments
+    /// - usage_record_id: The ID of the usage record to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<UsageRecordResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::usage_records::UsageRecords;
+    /// let usage_records = UsageRecords::build(lemonsqueezy);
+    /// let usage_record = usage_records.retrieve(1).await;
+    /// ```
+    ///
     pub async fn retrieve(
         &self,
         usage_record_id: usize,
@@ -77,6 +92,20 @@ impl UsageRecords {
         Ok(response)
     }
 
+    /// Retrieve all usage records
+    ///
+    /// # Arguments
+    /// - filters: The usage record filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<UsageRecordResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::usage_records::UsageRecords;
+    /// let usage_records = UsageRecords::build(lemonsqueezy);
+    /// let usage_records = usage_records.get_all(None).await;
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<UsageRecordFilters>,
@@ -102,6 +131,20 @@ impl UsageRecords {
         Ok(response)
     }
 
+    /// Update a usage record
+    /// # Arguments
+    /// - usage_record_id: The ID of the usage record to update
+    /// - data: The usage record data
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Value, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::usage_records::UsageRecords;
+    /// let usage_records = UsageRecords::build(lemonsqueezy);
+    /// let usage_record = usage_records.create(usage_record_data).await;
+    /// ```
     pub async fn create(
         &self,
         data: CreateUsageRecord,

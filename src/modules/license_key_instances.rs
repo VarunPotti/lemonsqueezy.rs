@@ -24,6 +24,21 @@ impl LicenseKeyInstances {
         Self { api }
     }
 
+    /// Retrieve a license key instance
+    ///
+    /// # Arguments
+    /// - license_key_id: The ID of the license key instance to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<LicenseKeyInstancesResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::license_key_instances::LicenseKeyInstances;
+    ///
+    /// let license_key_instances = LicenseKeyInstances::build(lemonsqueezy);
+    /// let license_key_instance = license_key_instances.retrieve(1).await;
+    /// ```
     pub async fn retrieve(
         &self,
         license_key_id: usize,
@@ -39,6 +54,21 @@ impl LicenseKeyInstances {
         Ok(response)
     }
 
+    /// Retrieve all license key instances
+    ///
+    /// # Arguments
+    /// - filters: The license key instance filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<LicenseKeyInstancesResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::license_key_instances::LicenseKeyInstances;
+    ///
+    /// let license_key_instances = LicenseKeyInstances::build(lemonsqueezy);
+    /// let license_key_instances = license_key_instances.get_all(None).await.unwrap();
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<LicenseKeyInstancesFilters>,

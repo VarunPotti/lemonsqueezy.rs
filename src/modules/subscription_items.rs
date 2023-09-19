@@ -45,6 +45,20 @@ impl SubscriptionItems {
         Self { api }
     }
 
+    /// Retrieve a subscription item
+    ///
+    /// # Arguments
+    /// - subscription_item_id: The ID of the subscription item to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<SubscriptionItemResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::subscription_items::SubscriptionItems;
+    /// let subscription_items = SubscriptionItems::build(lemonsqueezy);
+    /// let subscriptions_item = subscription_items.retrieve(1).await;
+    /// ```
     pub async fn retrieve(
         &self,
         subscription_item_id: usize,
@@ -60,6 +74,20 @@ impl SubscriptionItems {
         Ok(response)
     }
 
+    /// Retrieve all subscription items
+    ///
+    /// # Arguments
+    /// - filters: The subscription item filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<SubscriptionItemResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::subscription_items::SubscriptionItems;
+    /// let subscription_items = SubscriptionItems::build(lemonsqueezy);
+    /// let subscription_items = subscription_items.get_all(None).await.unwrap();
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<SubscriptionItemFilters>,
@@ -115,6 +143,20 @@ impl SubscriptionItems {
         Ok(response)
     }
 
+    /// Update a subscription item
+    ///
+    /// # Arguments
+    /// - data: The subscription item data
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Value, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::subscription_items::SubscriptionItems;
+    /// let subscription_items = SubscriptionItems::build(lemonsqueezy);
+    /// let subscription_items = subscription_items.update(data).await.unwrap();
+    /// ```
     pub async fn update(
         &self,
         data: ResponseData<SubscriptionItemPatchRequest>,
@@ -130,6 +172,20 @@ impl SubscriptionItems {
         Ok(response)
     }
 
+    /// Retrieve the current usage for a subscription item
+    ///
+    /// # Arguments
+    /// - subscription_item_id: The ID of the subscription item to retrieve
+    ///
+    /// # Returns
+    /// - anyhow::Result<ResponseMeta<SubscriptionItemMetaResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::subscription_items::SubscriptionItems;
+    /// let subscription_items = SubscriptionItems::build(lemonsqueezy);
+    /// let subscription_items = subscription_items.current_usage(1).await.unwrap();
+    /// ```
     pub async fn current_usage(
         &self,
         subscription_item_id: usize,

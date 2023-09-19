@@ -21,3 +21,9 @@ async fn main() {
     println!("{:#?}", products);
 }
 ~~~
+
+### Docs
+Docs can be found [here](docs/index.md)
+
+### License
+This project is licensed under the Apache License - see the [LICENSE.md](LICENSE.md) file for details

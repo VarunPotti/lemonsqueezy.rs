@@ -67,7 +67,7 @@ impl Product {
     /// Retrieve all the product
     ///
     /// # Returns
-    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    /// `Result<VecResponse<Vec<ResponseData<ProductResponse>>, crate::errors::NetworkError>` object
     ///
     /// # Example
     /// ```rust

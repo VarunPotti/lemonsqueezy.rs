@@ -76,7 +76,7 @@ impl Variant {
     /// Get all variants
     ///
     /// # Returns
-    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    /// `Result<VecResponse<Vec<ResponseData<VariantResponse>>, crate::errors::NetworkError>` object
     ///
     /// # Example
     /// ```rust

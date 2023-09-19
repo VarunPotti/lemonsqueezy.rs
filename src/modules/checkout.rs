@@ -17,6 +17,20 @@ impl Checkout {
         Self { api }
     }
 
+    /// Retrieve a checkout
+    ///
+    /// # Arguments
+    /// - checkout_id: The ID of the checkout to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<CheckoutResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::checkout::Checkout;
+    /// let checkout = Checkout::build(lemonsqueezy);
+    /// let checkout = checkout.retrieve(1).await;
+    /// ```
     pub async fn retrieve(
         &self,
         checkout_id: String,
@@ -29,6 +43,20 @@ impl Checkout {
         Ok(response)
     }
 
+    /// Retrieve all checkouts
+    ///
+    /// # Arguments
+    /// - filters: The checkout filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<CheckoutResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::checkout::Checkout;
+    /// let checkout = Checkout::build(lemonsqueezy);
+    /// let checkout = checkout.get_all(None).await;
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<WebhookRedemptionsFilters>,
@@ -50,6 +78,26 @@ impl Checkout {
         Ok(response)
     }
 
+    /// Create a checkout
+    ///
+    /// # Arguments
+    /// - data: The checkout data
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<CheckoutResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::checkout::Checkout;
+    /// use lemonsqueezy::types::checkout::*;
+    ///
+    /// let checkout = Checkout::build(lemonsqueezy);
+    /// let checkout = checkout.create(CreateCheckout {
+    ///     store_id: 1,
+    ///     customer_id: 1,
+    /// // ... other fields
+    /// }).await;
+    /// ```
     pub async fn create(
         &self,
         data: CreateCheckout,
@@ -57,8 +105,6 @@ impl Checkout {
         let data = json!({
             "data": data,
         });
-
-        println!("{}", serde_json::to_string_pretty(&data).unwrap());
 
         let response = self.api.post("/v1/checkouts", data).await?;
 

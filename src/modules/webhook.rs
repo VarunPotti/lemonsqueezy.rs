@@ -30,6 +30,21 @@ impl Webhook {
         Self { api }
     }
 
+    /// Retrieve a webhook
+    ///
+    /// # Arguments
+    /// - webhook_id: The ID of the webhook to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<WebhookResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::webhook::Webhook;
+    ///
+    /// let webhook = Webhook::build(lemonsqueezy);
+    /// let webhook = webhook.retrieve(1).await;
+    /// ```
     pub async fn retrieve(
         &self,
         webhook_id: i64,
@@ -42,6 +57,21 @@ impl Webhook {
         Ok(response)
     }
 
+    /// Delete a webhook
+    ///
+    /// # Arguments
+    /// - webhook_id: The ID of the webhook to delete
+    ///
+    /// # Returns
+    /// - `anyhow::Result<(), crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::webhook::Webhook;
+    ///
+    /// let webhook = Webhook::build(lemonsqueezy);
+    /// let webhook = webhook.delete(1).await;
+    /// ```
     pub async fn delete(&self, webhook_id: i64) -> anyhow::Result<(), crate::errors::NetworkError> {
         self.api
             .delete(&format!("/v1/webhooks/{}", webhook_id))
@@ -50,6 +80,21 @@ impl Webhook {
         Ok(())
     }
 
+    /// Retrieve all webhooks
+    ///
+    /// # Arguments
+    /// - filters: The webhook filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<WebhookResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::webhook::Webhook;
+    ///
+    /// let webhook = Webhook::build(lemonsqueezy);
+    /// let webhook = webhook.get_all(None).await;
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<WebhookRedemptionsFilters>,
@@ -83,6 +128,25 @@ impl Webhook {
         Ok(response)
     }
 
+    /// Create a webhook
+    ///
+    /// # Arguments
+    /// - data: The webhook data
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<WebhookResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::webhook::Webhook;
+    /// use lemonsqueezy::types::webhook::*;
+    ///
+    /// let webhook = Webhook::build(lemonsqueezy);
+    /// let webhook = webhook.create(CreateWebhook {
+    ///    store_id: 1,
+    ///     // ..
+    /// }).await;
+    /// ```
     pub async fn create(
         &self,
         data: CreateWebhook,
@@ -96,6 +160,21 @@ impl Webhook {
         Ok(response)
     }
 
+    /// Update a webhook
+    ///
+    /// # Arguments
+    /// - data: The webhook data
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<WebhookResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::webhook::Webhook;
+    ///
+    /// let webhook = Webhook::build(lemonsqueezy);
+    /// let webhook = webhook.update(data).await;
+    /// ```
     pub async fn update(
         &self,
         data: UpdateWebhook,
@@ -103,8 +182,6 @@ impl Webhook {
         let url = format!("/v1/webhooks/{}", data.id);
 
         let data = json!({ "data": data });
-
-        println!("{}", serde_json::to_string_pretty(&data).unwrap());
 
         let response = self.api.post(&url, data).await?;
 

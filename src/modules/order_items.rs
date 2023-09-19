@@ -66,7 +66,7 @@ impl OrderItem {
     /// Retrieve all the Order Items
     ///
     /// # Returns
-    /// `Result<VecResponse<Vec<ResponseData<CustomerResponse>>, crate::errors::NetworkError>` object
+    /// `Result<VecResponse<Vec<ResponseData<OrderItemResponse>>, crate::errors::NetworkError>` object
     ///
     /// # Example
     /// ```rust

@@ -59,21 +59,54 @@ impl SubscriptionInvoice {
         Self { api }
     }
 
+    /// Retrieve a Subscription Invoice
+    ///
+    /// # Arguments
+    /// * `subscription_invoice_id` - The subscription invoice ID
+    ///
+    /// # Returns
+    /// `anyhow::Result<Response<SubscriptionInvoiceResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::subscription_invoice::SubscriptionInvoice;
+    /// let subscriptions = SubscriptionInvoice::build(lemonsqueezy);
+    /// let subscriptions = subscriptions.retrieve(1).await;
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/subscription-invoices#retrieve-a-subscription-invoice
     pub async fn retrieve(
         &self,
-        file_id: usize,
+        subscription_invoice_id: usize,
     ) -> anyhow::Result<Response<SubscriptionInvoiceResponse>, crate::errors::NetworkError> {
         let response = self
             .api
             .get::<Response<SubscriptionInvoiceResponse>>(&format!(
                 "/v1/subscription-invoices/{}",
-                file_id
+                subscription_invoice_id
             ))
             .await?;
 
         Ok(response)
     }
 
+    /// Retrieve all Subscription Invoices
+    ///
+    /// # Arguments
+    /// * `filters` - The Subscription Invoice filters
+    ///
+    /// # Returns
+    /// `anyhow::Result<VecResponse<Vec<ResponseData<SubscriptionInvoiceResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::subscription_invoice::SubscriptionInvoice;
+    ///
+    /// let mut filters = SubscriptionInvoiceFilter::default();
+    /// filters.store_id = Some(1);
+    /// let subscription_invoice = SubscriptionInvoice::build(lemonsqueezy);
+    /// let subscription_invoice = subscription_invoice.get_all(Some(filters)).await;
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<SubscriptionInvoiceFilter>,
@@ -128,8 +161,6 @@ impl SubscriptionInvoice {
                 }
             }
         }
-
-        println!("{}", url);
 
         let response = self.api.get(&url).await?;
 

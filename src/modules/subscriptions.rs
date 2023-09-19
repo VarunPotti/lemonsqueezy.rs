@@ -81,6 +81,22 @@ impl Subscriptions {
         Self { api }
     }
 
+    /// Retrieve a Subscription
+    ///
+    /// # Arguments
+    /// * `subscription_id` - The subscription id
+    ///
+    /// # Returns
+    /// `Result<Response<SubscriptionResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::subscriptions::Subscriptions;
+    /// let subscriptions = Subscriptions::build(lemonsqueezy);
+    /// let subscriptions = subscriptions.retrieve(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/subscriptions#retrieve-a-subscription
     pub async fn retrieve(
         &self,
         subscription_id: usize,
@@ -96,6 +112,22 @@ impl Subscriptions {
         Ok(response)
     }
 
+    /// Get all the Subscriptions
+    ///
+    /// # Arguments
+    /// * `filters` - The Subscription filters
+    ///
+    /// # Returns
+    /// anyhow::Result<VecResponse<Vec<ResponseData<SubscriptionResponse>>>,crate::errors::NetworkError>
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::subscriptions::Subscriptions;
+    /// let subscriptions = Subscriptions::build(lemonsqueezy);
+    /// let subscriptions = subscriptions.get_all(None).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/subscriptions#list-all-subscriptions
     pub async fn get_all(
         &self,
         filters: Option<SubscriptionFilters>,
@@ -151,6 +183,22 @@ impl Subscriptions {
         Ok(response)
     }
 
+    /// Update a Subscription
+    ///
+    /// # Arguments
+    /// * `data` - ResponseData<SubscriptionPatchRequest>,
+    ///
+    /// # Returns
+    /// anyhow::Result<Value, crate::errors::NetworkError>
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::subscriptions::Subscriptions;
+    /// let subscriptions = Subscriptions::build(lemonsqueezy);
+    /// let subscriptions = subscriptions.update(data).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/subscriptions#update-a-subscription
     pub async fn update(
         &self,
         data: ResponseData<SubscriptionPatchRequest>,
@@ -166,6 +214,22 @@ impl Subscriptions {
         Ok(response)
     }
 
+    /// Cancel a Subscription
+    ///
+    /// # Arguments
+    /// * `subscription_id` - The subscription id
+    ///
+    /// # Returns
+    /// anyhow::Result<Value, crate::errors::NetworkError>
+    ///
+    /// # Example
+    /// ```rust
+    /// use lemonsqueezy::subscriptions::Subscriptions;
+    /// let subscriptions = Subscriptions::build(lemonsqueezy);
+    /// let subscriptions = subscriptions.cancel(123).await.unwrap();
+    /// ```
+    ///
+    /// Read More: https://docs.lemonsqueezy.com/api/subscriptions#update-a-subscription
     pub async fn cancel(
         &self,
         subscription_id: usize,

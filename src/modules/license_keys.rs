@@ -40,6 +40,20 @@ impl LicenseKey {
         Self { api }
     }
 
+    /// Retrieve a license key
+    ///
+    /// # Arguments
+    /// - license_key_id: The ID of the license key to retrieve
+    ///
+    /// # Returns
+    /// - `anyhow::Result<Response<LicenseKeyResponse>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::license_keys::LicenseKey;
+    /// let license_keys = LicenseKey::build(lemonsqueezy);
+    /// let license_key = license_keys.retrieve(1).await;
+    /// ```
     pub async fn retrieve(
         &self,
         license_key_id: usize,
@@ -52,6 +66,20 @@ impl LicenseKey {
         Ok(response)
     }
 
+    /// Retrieve all license keys
+    ///
+    /// # Arguments
+    /// - filters: The license key filters
+    ///
+    /// # Returns
+    /// - `anyhow::Result<VecResponse<Vec<ResponseData<LicenseKeyResponse>>>, crate::errors::NetworkError>` object
+    ///
+    /// # Example
+    /// ```
+    /// use lemonsqueezy::license_keys::LicenseKey;
+    /// let license_keys = LicenseKey::build(lemonsqueezy);
+    /// let license_key = license_keys.get_all(None).await;
+    /// ```
     pub async fn get_all(
         &self,
         filters: Option<LicenseKeyFilters>,
