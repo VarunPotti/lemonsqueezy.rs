@@ -1,9 +1,88 @@
 pub use crate::types::webhook::*;
 
+pub use crate::orders::OrderResponse;
+pub use crate::subscriptions::SubscriptionResponse;
+pub use crate::license_keys::LicenseKeyResponse;
+
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
 use crate::utils::{Response, ResponseData, VecResponse};
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookOrderEvent<T> {
+    pub meta: WebhookEventMeta<T>,
+    pub data: WebhookOrderData,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookSuscriptionEvent<T> {
+    pub meta: WebhookEventMeta<T>,
+    pub data: WebhookSubscriptionData,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookLicenseEvent<T> {
+    pub meta: WebhookEventMeta<T>,
+    pub data: WebhookLicenseData,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookEventMeta<T> {
+    pub event_name: String,
+    pub custom_data: T,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookOrderData {
+    pub r#type: String,
+    pub id: i64,
+    pub attributes: OrderResponse,
+    pub relationships: WebhookRelationships,
+    pub links: WebhookLinks,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookSubscriptionData {
+    pub r#type: String,
+    pub id: i64,
+    pub attributes: SubscriptionResponse,
+    pub relationships: WebhookRelationships,
+    pub links: WebhookLinks,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookLicenseData {
+    pub r#type: String,
+    pub id: i64,
+    pub attributes: LicenseKeyResponse,
+    pub relationships: WebhookRelationships,
+    pub links: WebhookLinks,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookRelationships {
+    pub store: RelationshipLinks,
+    pub customer: RelationshipLinks,
+    pub order_items: RelationshipLinks,
+    pub subscriptions: RelationshipLinks,
+    pub license_keys: RelationshipLinks,
+    #[serde(rename = "discount-redemptions")]
+    pub discount_redemptions: RelationshipLinks,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct RelationshipLinks {
+    pub related: String,
+    #[serde(rename = "self")]
+    pub link_self: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct WebhookLinks {
+    #[serde(rename = "self")]
+    pub link_self: String,
+}
 
 pub struct WebhookRedemptionsFilters {
     pub order_id: Option<i64>,
