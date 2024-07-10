@@ -5,6 +5,7 @@ edition = "2021"
 license = "Apache-2.0"
 readme = "README.md"
 description = "Unofficial Rust client for the LemonSqueezy API"
+repository = "https://github.com/VarunPotti/lemonsqueezy.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
