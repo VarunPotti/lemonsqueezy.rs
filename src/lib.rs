@@ -5,7 +5,7 @@ use reqwest::{
 };
 
 pub(crate) mod errors;
-pub(crate) mod modules;
+pub mod modules;
 pub mod utils;
 pub use crate::modules::*;
 pub mod types;
