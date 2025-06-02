@@ -16,7 +16,7 @@ pub struct LicenseKeyResponse {
     pub key_short: String,
     pub activation_limit: i64,
     pub instances_count: i64,
-    pub disabled: i64,
+    pub disabled: bool,//i64,
     pub status: String,
     pub status_formatted: String,
     pub expires_at: Option<Value>,
