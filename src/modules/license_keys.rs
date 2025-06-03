@@ -41,6 +41,8 @@ pub struct LicenseActivationMeta {
 	pub variant_id: i64,
 	pub variant_name: String,
 	pub customer_id: i64,
+    pub customer_name: String,
+    pub customer_email: String,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
