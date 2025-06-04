@@ -57,7 +57,7 @@ pub struct LicenseActivationKey {
 	pub id: i64,
 	pub status: String,
 	pub key: String,
-	pub activation_limit: i64,
+	pub activation_limit: Option<i64>,
 	pub activation_usage: i64,
 	pub created_at: String,
 	pub expires_at: Option<String>,
