@@ -153,7 +153,7 @@ impl Webhook {
     /// ```
     pub async fn delete(&self, webhook_id: i64) -> anyhow::Result<(), crate::errors::NetworkError> {
         self.api
-            .delete(&format!("/v1/webhooks/{}", webhook_id))
+            .delete::<()>(&format!("/v1/webhooks/{}", webhook_id))
             .await?;
 
         Ok(())
