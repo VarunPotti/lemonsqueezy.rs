@@ -54,3 +54,16 @@ pub struct ResponseMeta<T> {
     jsonapi: Option<JsonAPI>,
     meta: T,
 }
+
+
+impl<T> Response<T> {
+
+    /// Retrieves a reference to the inner response data, if it exists.
+    ///
+    /// This function attempts to extract the inner data from the `data` field.
+    /// If the `data` contains a value and its `attributes` field exists, a reference to it is returned.
+    /// If either `data` is `None` or its `attributes` field is `None`, it returns `None`.
+    pub fn get_inner_response (&self) -> Option<&T> {
+        self.data.as_ref().and_then(|d| Some (&d.attributes))
+    }
+}

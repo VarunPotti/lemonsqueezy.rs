@@ -70,6 +70,36 @@ impl LemonSqueezy {
         Ok(json)
     }
 
+    /// Post a form resource to the LemonSqueezy API
+    ///
+    /// ### Arguments
+    /// url - The URL to send a `Post` request to
+    /// headers - Custom headers to send with the request
+    /// form - The form data to send with the request (list of key-value pairs)
+    ///
+    /// ### Returns
+    /// A `Result` containing either the response body as Generic type T or a `NetworkError`
+    pub async fn post_form<V: for<'de> serde::Deserialize<'de>> (
+        &self,
+        url: &str,
+        headers: HeaderMap,
+        form: &[(&str, &str)],
+    ) -> anyhow::Result<V, NetworkError> {
+        let url = format!("{}{}", utils::API_URL, url);
+
+        let response = self
+            .client
+            .post(url)
+            .headers(headers)
+            .form(form)
+            .send()
+            .await?;
+
+        let response = response.json().await?;
+
+        Ok(response)
+    }
+
     /// Post a resource to the LemonSqueezy API
     ///
     /// ### Arguments
