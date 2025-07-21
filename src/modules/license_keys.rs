@@ -1,7 +1,7 @@
+use crate::utils::{Response, ResponseData, VecResponse};
+use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use reqwest::header::{HeaderMap, HeaderValue};
-use crate::utils::{Response, ResponseData, VecResponse};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LicenseKeyResponse {
@@ -33,43 +33,61 @@ pub struct LicenseKeyFilters {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LicenseActivationMeta {
-	pub store_id: i64,
-	pub order_id: i64,
-	pub order_item_id: i64,
-	pub product_id: i64,
-	pub product_name: String,
-	pub variant_id: i64,
-	pub variant_name: String,
-	pub customer_id: i64,
+    pub store_id: i64,
+    pub order_id: i64,
+    pub order_item_id: i64,
+    pub product_id: i64,
+    pub product_name: String,
+    pub variant_id: i64,
+    pub variant_name: String,
+    pub customer_id: i64,
     pub customer_name: String,
     pub customer_email: String,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LicenseActivationInstance {
-	pub id: String, 
-	pub name: String,
-	pub created_at: String,
+    pub id: String,
+    pub name: String,
+    pub created_at: String,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LicenseActivationKey {
-	pub id: i64,
-	pub status: String,
-	pub key: String,
-	pub activation_limit: Option<i64>,
-	pub activation_usage: i64,
-	pub created_at: String,
-	pub expires_at: Option<String>,
-}	
+    pub id: i64,
+    pub status: String,
+    pub key: String,
+    pub activation_limit: Option<i64>,
+    pub activation_usage: i64,
+    pub created_at: String,
+    pub expires_at: Option<String>,
+}
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LicenseActivationResponse {
-	pub activated: bool,
-	pub error: Option<String>,
-	pub license_key: Option<LicenseActivationKey>,
-	pub instance: Option<LicenseActivationInstance>,
-	pub meta: Option<LicenseActivationMeta>,
+    pub activated: bool,
+    pub error: Option<String>,
+    pub license_key: Option<LicenseActivationKey>,
+    pub instance: Option<LicenseActivationInstance>,
+    pub meta: Option<LicenseActivationMeta>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LicenseValidationResponse {
+    pub valid: bool,
+    pub error: Option<String>,
+    pub license_key: Option<LicenseActivationKey>,
+    pub instance: Option<LicenseActivationInstance>,
+    pub meta: Option<LicenseActivationMeta>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LicenseDeactivationResponse {
+    pub deactivated: bool,
+    pub error: Option<String>,
+    pub license_key: Option<LicenseActivationKey>,
+    pub instance: Option<LicenseActivationInstance>,
+    pub meta: Option<LicenseActivationMeta>,
 }
 
 pub struct LicenseKey {
@@ -96,12 +114,11 @@ impl LicenseKey {
     /// let license_keys = LicenseKey::build(lemonsqueezy);
     /// let activation_response = license_keys.activate("38b1460a-5104-4067-a91d-77b872934d51", "Test").await;
     /// ```
-	pub async fn activate (
-		&self, 
-		license_key: &str,
+    pub async fn activate(
+        &self,
+        license_key: &str,
         instance_name: &str,
-	) -> anyhow::Result<LicenseActivationResponse, crate::errors::NetworkError> {
-
+    ) -> anyhow::Result<LicenseActivationResponse, crate::errors::NetworkError> {
         let mut headers = HeaderMap::new();
         headers.append(
             "Accept",
@@ -113,14 +130,75 @@ impl LicenseKey {
             ("instance_name", instance_name),
         ];
 
-		let response = self
+        let response = self
             .api
             .post_form::<LicenseActivationResponse>("/v1/licenses/activate", headers, &form)
             .await?;
 
         Ok(response)
-	}
-	
+    }
+
+    /// Deactivate a license key
+    ///
+    /// # Arguments
+    /// - license_key: The license key to deactivate
+    /// - instance_id: The ID of the instance to deactivate
+    ///
+    /// # Returns
+    /// - `anyhow::Result<LicenseDeactivationResponse, crate::errors::NetworkError>`
+    pub async fn deactivate(
+        &self,
+        license_key: &str,
+        instance_id: &str,
+    ) -> anyhow::Result<LicenseDeactivationResponse, crate::errors::NetworkError> {
+        let mut headers = HeaderMap::new();
+        headers.append(
+            "Accept",
+            HeaderValue::from_str("Accept: application/json").unwrap(),
+        );
+        let form = [("license_key", license_key), ("instance_id", instance_id)];
+
+        let response = self
+            .api
+            .post_form::<LicenseDeactivationResponse>("/v1/licenses/deactivate", headers, &form)
+            .await?;
+
+        Ok(response)
+    }
+
+
+ /// Validate a license key
+    ///
+    /// # Arguments
+    /// - license_key: The license key to validate
+    /// - instance_id: Optionally, the instance ID to validate
+    ///
+    /// # Returns
+    /// - `anyhow::Result<LicenseValidationResponse, crate::errors::NetworkError>`
+    pub async fn validate(
+        &self,
+        license_key: &str,
+        instance_id: Option<&str>,
+    ) -> anyhow::Result<LicenseValidationResponse, crate::errors::NetworkError> {
+        let mut headers = HeaderMap::new();
+        headers.append(
+            "Accept",
+            HeaderValue::from_static("application/json"),
+        );
+        
+        let mut form = vec![("license_key", license_key)];
+        if let Some(id) = instance_id {
+            form.push(("instance_id", id));
+        }
+
+        let response = self
+            .api
+            .post_form::<LicenseValidationResponse>("/v1/licenses/validate", headers, &form)
+            .await?;
+
+        Ok(response)
+    }
+
     /// Retrieve a license key
     ///
     /// # Arguments
