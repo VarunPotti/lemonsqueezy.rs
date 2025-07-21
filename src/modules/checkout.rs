@@ -92,11 +92,27 @@ impl Checkout {
     /// use lemonsqueezy::types::checkout::*;
     ///
     /// let checkout = Checkout::build(lemonsqueezy);
-    /// let checkout = checkout.create(CreateCheckout {
-    ///     store_id: 1,
-    ///     customer_id: 1,
-    /// // ... other fields
-    /// }).await;
+    // let checkout = checkout
+    //     .create(CreateCheckout {
+    //         r#type: String::from("checkouts"),
+    //         attributes: CreateCheckoutAttributes {
+    //             ..Default::default()
+    //         },
+    //         relationships: Some(CreateCheckoutRelationships {
+    //             store: lemonsqueezy::types::Data {
+    //                 data: CreateCheckoutRelationShipData {
+    //                     r#type: String::from("stores"),
+    //                     id: String::from("//store id"),
+    //                 },
+    //             },
+    //             variant: lemonsqueezy::types::Data {
+    //                 data: CreateCheckoutRelationShipData {
+    //                     r#type: String::from("variants"),
+    //                     id: String::from("// variant id"),
+    //                 },
+    //             },
+    //         }),
+    //     }).await;
     /// ```
     pub async fn create(
         &self,
